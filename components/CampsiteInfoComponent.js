@@ -23,6 +23,7 @@ function RenderCampsite(props) {
     const {campsite} = props;
     const view = React.createRef();
     const recognizeDrag = ({dx}) => (dx < -200) ? true : false;
+    const recognizeComment = ({dx}) => (dx > 200) ? true : false;
 
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
@@ -50,6 +51,8 @@ function RenderCampsite(props) {
                     ],
                     { cancelable: false }
                 );
+            } else if (recognizeComment(gestureState)) {
+                props.onShowModal();
             }
             return true;
         }
@@ -129,6 +132,7 @@ class CampsiteInfo extends Component {
             text: " "
         }
     }
+
     toggleModal() {
         this.setState({showModal: !this.state.showModal});
     }
